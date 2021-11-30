@@ -88,6 +88,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         "There might be options for donating to each recipe contributor at contribution section of each recipe.\n",
                     style: _bodyStyle),
                 TextSpan(text: "Finally,\n", style: _headingStyle),
+                    TextSpan(
+                        text:
+                        "Source code for this app is",
+                        style: _bodyStyle),
+                    TextSpan(
+                        text: " here. ",
+                        style: _bodyStyle.copyWith(color: Colors.blue),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            launch("https://github.com/Binabh/based-cooking-app");
+                          }),
+                    TextSpan(
+                        text:
+                        "Please feel free to discuss about bugs and features in issues of the repo. ",
+                        style: _bodyStyle),
                 TextSpan(
                     text:
                         "You can also donate to me (the app developer). Details are",

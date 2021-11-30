@@ -7,7 +7,7 @@ ThemeData primaryTheme = ThemeData(
     textTheme: const TextTheme(
       headline1:
           TextStyle(color: BasedColors.tomato, fontWeight: FontWeight.bold, fontSize: 18),
-      bodyText1: TextStyle(color: BasedColors.white, fontSize: 16, fontWeight: FontWeight.bold),
+      bodyText1: TextStyle(color: BasedColors.white, fontSize: 16),
       subtitle1: TextStyle(
           fontSize: 12, color: BasedColors.black, fontWeight: FontWeight.bold),
     ));
