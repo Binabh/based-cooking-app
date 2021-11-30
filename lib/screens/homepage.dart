@@ -1,11 +1,14 @@
 import 'package:based_cooking/base/database.dart';
 import 'package:based_cooking/constants/colors.dart';
+import 'package:based_cooking/constants/theme.dart';
 import 'package:based_cooking/repositories/get_files.dart';
 import 'package:based_cooking/screens/recipe.dart';
 import 'package:based_cooking/utils/debouncer.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -26,6 +29,81 @@ class _MyHomePageState extends State<MyHomePage> {
   String title = "";
   String tag = "";
   bool searchMode = false;
+  _info() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          TextStyle _headingStyle = Theme.of(context).textTheme.headline1!;
+          TextStyle _bodyStyle = Theme.of(context).textTheme.bodyText1!;
+          return SimpleDialog(
+            backgroundColor: BasedColors.lightBlack,
+            contentPadding: const EdgeInsets.all(16),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: const BorderSide(color: BasedColors.tomato, width: 1.5)),
+            children: [
+              RichText(
+                  text: TextSpan(children: [
+                TextSpan(text: "About Based Cooking\n", style: _headingStyle),
+                TextSpan(
+                    text: "This app uses data from open source project ",
+                    style: _bodyStyle),
+                TextSpan(
+                    text: "based.cooking.",
+                    style: _bodyStyle.copyWith(color: Colors.blue),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        launch("https://based.cooking");
+                      }),
+                TextSpan(
+                    text: "You can find the source code ", style: _bodyStyle),
+                TextSpan(
+                    text: "here. ",
+                    style: _bodyStyle.copyWith(color: Colors.blue),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        launch("https://github.com/lukesmithxyz/based.cooking");
+                      }),
+                TextSpan(
+                    text:
+                        "Please visit the site for web version, philosophy behind this project and also if you want to donate or contribute towards the project. \n",
+                    style: _bodyStyle),
+                TextSpan(text: "How to contribute?\n", style: _headingStyle),
+                TextSpan(text: "Please read", style: _bodyStyle),
+                TextSpan(
+                    text: " this ",
+                    style: _bodyStyle.copyWith(color: Colors.blue),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        launch(
+                            "https://github.com/LukeSmithxyz/based.cooking/blob/master/README.md");
+                      }),
+                TextSpan(
+                    text:
+                        "short readme if you want to contribute recipes to the project. Currently the only way is submitting pull request to the git repo.\n",
+                    style: _bodyStyle),
+                TextSpan(text: "Also,\n", style: _headingStyle),
+                TextSpan(
+                    text:
+                        "There might be options for donating to each recipe contributor at contribution section of each recipe.\n",
+                    style: _bodyStyle),
+                TextSpan(text: "Finally,\n", style: _headingStyle),
+                TextSpan(
+                    text:
+                        "You can also donate to me (the app developer). Details are",
+                    style: _bodyStyle),
+                TextSpan(
+                    text: " here.\n",
+                    style: _bodyStyle.copyWith(color: Colors.blue),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        launch("https://binabh.com.np/donate");
+                      }),
+              ]))
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,9 +190,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   MarkdownBody(
                                     data: title,
                                     styleSheet: MarkdownStyleSheet(
-                                        h1: const TextStyle(
-                                            fontSize: 18,
-                                            color: BasedColors.lightBlue)),
+                                        h1: markdownStyleSheet.h1!
+                                            .copyWith(fontSize: 18)),
                                   ),
                                   Wrap(
                                       children: tags.map((e) {
@@ -147,10 +224,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       Radius.circular(16))),
                                           label: Text(
                                             e,
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                color: BasedColors.black,
-                                                fontWeight: FontWeight.bold),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1,
                                           ),
                                           backgroundColor: activeTag
                                               ? BasedColors.tomato
@@ -195,7 +271,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
             ),
-            SpeedDialChild(child: const Icon(Icons.info), label: "About"),
+            SpeedDialChild(
+                child: IconButton(
+                  icon: const Icon(Icons.info),
+                  onPressed: () {
+                    _info();
+                  },
+                ),
+                label: "About"),
           ],
         ));
   }

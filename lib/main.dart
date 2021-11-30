@@ -1,3 +1,4 @@
+import 'package:based_cooking/constants/theme.dart';
 import 'package:based_cooking/screens/homepage.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Based Cooking',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: primaryTheme,
       home: const MyHomePage(),
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:based_cooking/constants/colors.dart';
+import 'package:based_cooking/constants/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,13 +32,7 @@ class _RecipePageState extends State<RecipePage> {
           margin: const EdgeInsets.only(left: 8, top: 16, bottom: 16, right: 8),
           elevation: 1,
           child: Markdown(
-            styleSheet: MarkdownStyleSheet(
-                h1: const TextStyle(color: BasedColors.lightBlue),
-                h2: const TextStyle(color: BasedColors.lightBlue),
-                h3: const TextStyle(color: BasedColors.lightBlue),
-                listBullet: const TextStyle(color: BasedColors.tomato),
-                blockquote: const TextStyle(color: BasedColors.black),
-                p: const TextStyle(color: BasedColors.white)),
+            styleSheet: markdownStyleSheet,
             imageBuilder: (uri, b, c) {
               return CachedNetworkImage(
                 imageUrl: uri.toString(),
