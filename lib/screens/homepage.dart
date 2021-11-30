@@ -30,31 +30,28 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: BasedColors.black,
+        backgroundColor: BasedColors.lightBlack,
         appBar: AppBar(
-          backgroundColor: BasedColors.tomato,
+          backgroundColor: BasedColors.lightBlack,
           elevation: 0,
-          leading: searchMode
-              ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      title = "";
-                      searchMode = false;
-                    });
-                  },
-                  icon: const Icon(Icons.cancel))
-              : IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    setState(() {
-                      searchMode = true;
-                    });
-                  },
-                ),
           title: searchMode
               ? TextFormField(
+                  style: const TextStyle(color: BasedColors.white),
                   autofocus: true,
-                  decoration: const InputDecoration(fillColor: Colors.white),
+                  decoration: const InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: BasedColors.tomato,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide:
+                              BorderSide(color: BasedColors.tomato, width: 1)),
+                      isDense: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide:
+                              BorderSide(color: BasedColors.tomato, width: 1))),
                   onChanged: (value) {
                     _deBouncer.run(() {
                       setState(() {
@@ -63,9 +60,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                 )
-              : const Text(
-                  "Based Recipes",
-                  style: TextStyle(color: BasedColors.white),
+              : const Center(
+                  child: Text(
+                    "🍲 Based Cooking 🍳",
+                    style: TextStyle(color: BasedColors.white),
+                  ),
                 ),
         ),
         body: SafeArea(
@@ -94,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             }));
                           },
                           child: Card(
+                            shadowColor: BasedColors.tomato,
                             shape: const RoundedRectangleBorder(
                                 side: BorderSide(
                                     color: BasedColors.tomato, width: 1.5),
@@ -175,6 +175,26 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: BasedColors.tomato,
           animatedIcon: AnimatedIcons.menu_close,
           children: [
+            SpeedDialChild(
+              label: searchMode ? "Close Search" : "Search",
+              child: searchMode
+                  ? IconButton(
+                      onPressed: () {
+                        setState(() {
+                          title = "";
+                          searchMode = false;
+                        });
+                      },
+                      icon: const Icon(Icons.cancel))
+                  : IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () {
+                        setState(() {
+                          searchMode = true;
+                        });
+                      },
+                    ),
+            ),
             SpeedDialChild(child: const Icon(Icons.info), label: "About"),
           ],
         ));

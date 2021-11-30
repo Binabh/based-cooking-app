@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mp.com.binabh.basedcooking.based_cooking">
    <application
-        android:label="based_cooking"
+        android:label="Based Cooking"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

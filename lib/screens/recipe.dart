@@ -21,7 +21,7 @@ class _RecipePageState extends State<RecipePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: BasedColors.black,
+        backgroundColor: BasedColors.lightBlack,
         body: SafeArea(
             child: Card(
           shape: const RoundedRectangleBorder(
