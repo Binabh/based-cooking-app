@@ -9,7 +9,8 @@ import 'package:path_provider/path_provider.dart';
 class GetFilesRepository extends BaseRepository {
   getAllRecipes({bool forceUpdate = false}) async {
     Directory appDir = await getApplicationDocumentsDirectory();
-    Response response = await getDataFromServer("/master", forceRefresh: forceUpdate);
+    Response response =
+        await getDataFromServer("/master", forceRefresh: forceUpdate);
     List<RecipeFile> treeList = [
       for (var jsonObject in response.data['tree'])
         RecipeFile.fromJson(jsonObject)
@@ -20,15 +21,26 @@ class GetFilesRepository extends BaseRepository {
       for (var jsonObject in response.data['tree'])
         RecipeFile.fromJson(jsonObject)
     ];
+    List<String> recipePathList = [];
     for (RecipeFile recipeFile in recipeFiles) {
+      recipePathList.add(appDir.path + '/${recipeFile.path}');
       if (File(appDir.path + '/${recipeFile.path}').existsSync()) {
         if (File(appDir.path + '/${recipeFile.path}').statSync().size ==
             recipeFile.size) {
+          // TODO: check SHA sum and download file if different
         } else {
           await downloadFile(recipeFile.path, appDir.path);
         }
       } else {
         await downloadFile(recipeFile.path, appDir.path);
+      }
+    }
+    if (recipePathList.isNotEmpty) {
+      List<Recipe> dbRecipes = await db.recipeDao.getAllRecipes();
+      for (Recipe recipe in dbRecipes) {
+        if (!recipePathList.contains(recipe.filename)) {
+          deleteFile(recipe);
+        }
       }
     }
   }
