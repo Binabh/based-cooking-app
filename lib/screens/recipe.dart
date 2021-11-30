@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:based_cooking/constants/api_endpoints.dart';
 import 'package:based_cooking/constants/colors.dart';
 import 'package:based_cooking/constants/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -44,7 +45,7 @@ class _RecipePageState extends State<RecipePage> {
             },
             data: File(widget.filepath)
                 .readAsStringSync()
-                .replaceAll('(pix/', '(https://based.cooking/pix/'),
+                .replaceAll('(pix/', '(${ApiEndpoint.rawPixUrl}'),
             selectable: true,
             onTapLink: (text, link, title) async {
               Directory appDir = await getApplicationDocumentsDirectory();
