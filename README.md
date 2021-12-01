@@ -1,16 +1,15 @@
-# based_cooking
+# based-cooking-app
 
-A new Flutter project.
+Simple, ad free, open source recipe app.
 
-## Getting Started
+## Contributing
 
-This project is a starting point for a Flutter application.
+0. Create issue for new feature or bug
+1. Fork this repo
+2. Clone your forked repo
+3. Make changes
+4. Submit a merge request
 
-A few resources to get you started if this is your first Flutter project:
+## Contributing Recipes
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Submit your recipes [here](https://github.com/Binabh/based.cooking) via merge request.
