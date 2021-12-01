@@ -29,6 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String title = "";
   String tag = "";
   bool searchMode = false;
+  ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   _info() {
     showDialog(
         context: context,
@@ -276,6 +277,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         floatingActionButton: SpeedDial(
+          openCloseDial: isDialOpen,
           renderOverlay: false,
           backgroundColor: BasedColors.tomato,
           animatedIcon: AnimatedIcons.menu_close,
@@ -304,6 +306,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: IconButton(
                   icon: const Icon(Icons.info),
                   onPressed: () {
+                    isDialOpen.value = false;
                     _info();
                   },
                 ),
