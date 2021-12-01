@@ -1,0 +1,7 @@
+<p>Simple, ad free, open source recipe app.</p>
+<p>More than 200 recipes from <a href="https://based.cooking/">based.cooking</a>.</p>
+<p>Features</p>
+<ul>
+<li>filter recipes by tag</li>
+<li>search recipes</li>
+</ul>
