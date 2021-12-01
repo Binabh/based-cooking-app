@@ -29,10 +29,10 @@ class GetFilesRepository extends BaseRepository {
             recipeFile.size) {
           // TODO: check SHA sum and download file if different
         } else {
-          await downloadFile(recipeFile.path, appDir.path);
+          downloadFile(recipeFile.path, appDir.path);
         }
       } else {
-        await downloadFile(recipeFile.path, appDir.path);
+        downloadFile(recipeFile.path, appDir.path);
       }
     }
     if (recipePathList.isNotEmpty) {
