@@ -68,6 +68,10 @@ android {
             dimension "deploy"
             signingConfig null
         }
+        playstore {
+            dimension "deploy"
+            signingConfig signingConfigs.release
+        }
     }
 
     android.applicationVariants.all { variant ->
