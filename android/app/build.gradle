@@ -30,6 +30,9 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 android {
+    lintOptions {
+        checkReleaseBuilds false
+    }
     compileSdkVersion 30
 
     compileOptions {
