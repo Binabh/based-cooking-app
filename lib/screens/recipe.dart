@@ -4,7 +4,6 @@ import 'package:based_cooking/constants/api_endpoints.dart';
 import 'package:based_cooking/constants/colors.dart';
 import 'package:based_cooking/constants/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:path_provider/path_provider.dart';
@@ -45,7 +44,7 @@ class _RecipePageState extends State<RecipePage> {
             },
             data: File(widget.filepath)
                 .readAsStringSync()
-                .replaceAll('(pix/', '(${ApiEndpoint.rawPixUrl}'),
+                .replaceAll('(/pix/', '(${ApiEndpoint.rawPixUrl}'),
             selectable: true,
             onTapLink: (text, link, title) async {
               Directory appDir = await getApplicationDocumentsDirectory();

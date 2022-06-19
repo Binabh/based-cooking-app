@@ -6,7 +6,7 @@ part of 'database.dart';
 // MoorGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
+// ignore_for_file: type=lint
 class Recipe extends DataClass implements Insertable<Recipe> {
   final String filename;
   final String title;
@@ -178,26 +178,31 @@ class RecipesCompanion extends UpdateCompanion<Recipe> {
 }
 
 class $RecipesTable extends Recipes with TableInfo<$RecipesTable, Recipe> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $RecipesTable(this._db, [this._alias]);
+  $RecipesTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _filenameMeta = const VerificationMeta('filename');
+  @override
   late final GeneratedColumn<String?> filename = GeneratedColumn<String?>(
       'filename', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
   late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
       'title', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _tagsMeta = const VerificationMeta('tags');
+  @override
   late final GeneratedColumn<String?> tags = GeneratedColumn<String?>(
       'tags', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _isFavouriteMeta =
       const VerificationMeta('isFavourite');
+  @override
   late final GeneratedColumn<bool?> isFavourite = GeneratedColumn<bool?>(
       'is_favourite', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (is_favourite IN (0, 1))',
       defaultValue: const Constant(false));
@@ -249,7 +254,7 @@ class $RecipesTable extends Recipes with TableInfo<$RecipesTable, Recipe> {
 
   @override
   $RecipesTable createAlias(String alias) {
-    return $RecipesTable(_db, alias);
+    return $RecipesTable(attachedDatabase, alias);
   }
 }
 

@@ -15,7 +15,8 @@ class GetFilesRepository extends BaseRepository {
       for (var jsonObject in response.data['tree'])
         RecipeFile.fromJson(jsonObject)
     ];
-    String srcSHA = treeList.firstWhere((element) => element.path == 'src').sha;
+    String srcSHA =
+        treeList.firstWhere((element) => element.path == 'content').sha;
     response = await getDataFromServer('/$srcSHA', forceRefresh: forceUpdate);
     List<RecipeFile> recipeFiles = [
       for (var jsonObject in response.data['tree'])
@@ -46,18 +47,32 @@ class GetFilesRepository extends BaseRepository {
   }
 
   downloadFile(String filename, String savePath) async {
+    if (filename == "_index.md") return;
     bool success = await getFileFromServer("/$filename",
         savePath: savePath + "/$filename");
     if (success) {
       List<String> recipe = await File(savePath + "/$filename").readAsLines();
-      String title = recipe.first;
+      String title = recipe
+          .firstWhere((element) => element.contains("title:"))
+          .split(":")
+          .last
+          .replaceAll('"', "");
       String tagline =
-          recipe.firstWhere((element) => element.contains(";tags:"));
-      List<String> tags = tagline.split(":").last.split(" ");
+          recipe.firstWhere((element) => element.contains("tags:"));
+      List<String> tags = tagline
+          .split(":")
+          .last
+          .replaceAll("[", "")
+          .replaceAll("]", "")
+          .replaceAll("'", "")
+          .split(",");
       tags.removeWhere((element) => element.isEmpty);
+      for (var element in tags) {
+        element.trim();
+      }
       String tagString = tags.join("|");
       db.recipeDao.insertRecipe(RecipesCompanion.insert(
-          filename: savePath + '/$filename', title: title, tags: tagString));
+          filename: savePath + '/$filename', title: '# $title', tags: tagString));
     }
   }
 

@@ -33,7 +33,7 @@ android {
     lintOptions {
         checkReleaseBuilds false
     }
-    compileSdkVersion 30
+    compileSdkVersion 32
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -52,7 +52,7 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "np.com.binabh.basedcooking"
         minSdkVersion 16
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -100,5 +100,7 @@ flutter {
 }
 
 dependencies {
+    implementation "androidx.core:core-ktx:+"
+    implementation 'androidx.work:work-runtime:2.7.0-alpha05'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
