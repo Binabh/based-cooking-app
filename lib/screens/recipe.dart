@@ -6,6 +6,7 @@ import 'package:based_cooking/constants/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:markdown/markdown.dart' as md;
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -32,6 +33,10 @@ class _RecipePageState extends State<RecipePage> {
           margin: const EdgeInsets.only(left: 8, top: 16, bottom: 16, right: 8),
           elevation: 1,
           child: Markdown(
+            extensionSet: md.ExtensionSet(
+              md.ExtensionSet.gitHubWeb.blockSyntaxes,
+              [md.EmojiSyntax(), ...md.ExtensionSet.gitHubWeb.inlineSyntaxes],
+            ),
             styleSheet: markdownStyleSheet,
             imageBuilder: (uri, b, c) {
               return CachedNetworkImage(
