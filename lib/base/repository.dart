@@ -1,18 +1,16 @@
 import 'dart:io';
 
-import 'package:based_cooking/constants/api_endpoints.dart';
+import 'package:basedcooking/constants/api_endpoints.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_http_cache/dio_http_cache.dart';
 
 class BaseRepository {
   var options = BaseOptions(
-    connectTimeout: 20000,
-    receiveTimeout: 20000,
+    connectTimeout: const Duration(seconds: 20),
+    receiveTimeout: const Duration(seconds: 20),
   );
   late Dio dio;
   BaseRepository() {
     dio = Dio(options);
-    dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: "")).interceptor);
   }
   Future<Response> getDataFromServer(String url,
       {Map<String, dynamic>? params, bool forceRefresh = false}) async {
@@ -21,11 +19,9 @@ class BaseRepository {
       result = await dio.get(
         ApiEndpoint.apiBaseUrl + url,
         queryParameters: params,
-        options: buildCacheOptions(const Duration(days: 1),
-            forceRefresh: forceRefresh),
       );
       return result;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       print(e.message);
     }
     return result!;
@@ -47,7 +43,8 @@ class BaseRepository {
       raf.writeFromSync(result.data);
       await raf.close();
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
+      print(e.toString());
       return false;
     }
   }

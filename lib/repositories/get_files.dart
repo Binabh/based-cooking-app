@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:based_cooking/base/database.dart';
-import 'package:based_cooking/base/repository.dart';
-import 'package:based_cooking/models/recipe_file.dart';
+import 'package:basedcooking/base/database.dart';
+import 'package:basedcooking/base/repository.dart';
+import 'package:basedcooking/models/recipe_file.dart';
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -24,9 +24,9 @@ class GetFilesRepository extends BaseRepository {
     ];
     List<String> recipePathList = [];
     for (RecipeFile recipeFile in recipeFiles) {
-      recipePathList.add(appDir.path + '/${recipeFile.path}');
-      if (File(appDir.path + '/${recipeFile.path}').existsSync()) {
-        if (File(appDir.path + '/${recipeFile.path}').statSync().size ==
+      recipePathList.add('${appDir.path}/${recipeFile.path}');
+      if (File('${appDir.path}/${recipeFile.path}').existsSync()) {
+        if (File('${appDir.path}/${recipeFile.path}').statSync().size ==
             recipeFile.size) {
           // TODO: check SHA sum and download file if different
         } else {
@@ -49,9 +49,9 @@ class GetFilesRepository extends BaseRepository {
   downloadFile(String filename, String savePath) async {
     if (filename == "_index.md") return;
     bool success = await getFileFromServer("/$filename",
-        savePath: savePath + "/$filename");
+        savePath: "$savePath/$filename");
     if (success) {
-      List<String> recipe = await File(savePath + "/$filename").readAsLines();
+      List<String> recipe = await File("$savePath/$filename").readAsLines();
       String title = recipe
           .firstWhere((element) => element.contains("title:"))
           .split(":")
@@ -72,7 +72,7 @@ class GetFilesRepository extends BaseRepository {
       }
       String tagString = tags.join("|");
       db.recipeDao.insertRecipe(RecipesCompanion.insert(
-          filename: savePath + '/$filename', title: '# $title', tags: tagString));
+          filename: '$savePath/$filename', title: '# $title', tags: tagString));
     }
   }
 

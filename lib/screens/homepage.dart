@@ -1,14 +1,14 @@
-import 'package:based_cooking/base/database.dart';
-import 'package:based_cooking/constants/colors.dart';
-import 'package:based_cooking/constants/theme.dart';
-import 'package:based_cooking/repositories/get_files.dart';
-import 'package:based_cooking/screens/recipe.dart';
-import 'package:based_cooking/utils/debouncer.dart';
+import 'package:basedcooking/base/database.dart';
+import 'package:basedcooking/constants/colors.dart';
+import 'package:basedcooking/constants/theme.dart';
+import 'package:basedcooking/repositories/get_files.dart';
+import 'package:basedcooking/screens/recipe.dart';
+import 'package:basedcooking/utils/debouncer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -34,8 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog(
         context: context,
         builder: (context) {
-          TextStyle _headingStyle = Theme.of(context).textTheme.headline1!;
-          TextStyle _bodyStyle = Theme.of(context).textTheme.bodyText1!;
+          TextStyle headingStyle = Theme.of(context).textTheme.displayLarge!;
+          TextStyle bodyStyle = Theme.of(context).textTheme.bodyLarge!;
           return SimpleDialog(
             backgroundColor: BasedColors.lightBlack,
             contentPadding: const EdgeInsets.all(16),
@@ -45,86 +45,86 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               RichText(
                   text: TextSpan(children: [
-                TextSpan(text: "About Based Cooking\n", style: _headingStyle),
+                TextSpan(text: "About Based Cooking\n", style: headingStyle),
                 TextSpan(
                     text:
                         "This app is ads and tracker free recipe app. It uses data from open source project ",
-                    style: _bodyStyle),
+                    style: bodyStyle),
                 TextSpan(
                     text: "based.cooking.",
-                    style: _bodyStyle.copyWith(color: Colors.blue),
+                    style: bodyStyle.copyWith(color: Colors.blue),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launch("https://based.cooking");
+                        launchUrlString("https://based.cooking");
                       }),
                 TextSpan(
                     text:
                         "Please visit the site for web version, philosophy behind this project and also if you want to donate or contribute towards the project.",
-                    style: _bodyStyle),
+                    style: bodyStyle),
                 TextSpan(
                     text: "You can find the original source code ",
-                    style: _bodyStyle),
+                    style: bodyStyle),
                 TextSpan(
                     text: "here. ",
-                    style: _bodyStyle.copyWith(color: Colors.blue),
+                    style: bodyStyle.copyWith(color: Colors.blue),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launch("https://github.com/lukesmithxyz/based.cooking");
+                        launchUrlString("https://github.com/lukesmithxyz/based.cooking");
                       }),
                 TextSpan(
                     text:
                         "This app uses the forked version of original repo hosted ",
-                    style: _bodyStyle),
+                    style: bodyStyle),
                 TextSpan(
                     text: "here. \n",
-                    style: _bodyStyle.copyWith(color: Colors.blue),
+                    style: bodyStyle.copyWith(color: Colors.blue),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launch("https://github.com/Binabh/based.cooking");
+                        launchUrlString("https://github.com/Binabh/based.cooking");
                       }),
-                TextSpan(text: "How to contribute?\n", style: _headingStyle),
-                TextSpan(text: "Please read", style: _bodyStyle),
+                TextSpan(text: "How to contribute?\n", style: headingStyle),
+                TextSpan(text: "Please read", style: bodyStyle),
                 TextSpan(
                     text: " this ",
-                    style: _bodyStyle.copyWith(color: Colors.blue),
+                    style: bodyStyle.copyWith(color: Colors.blue),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launch(
+                        launchUrlString(
                             "https://github.com/LukeSmithxyz/based.cooking/blob/master/README.md");
                       }),
                 TextSpan(
                     text:
                         "short readme if you want to contribute recipes to the project. Currently the only way is submitting pull request to the git repo.\n",
-                    style: _bodyStyle),
-                TextSpan(text: "Also,\n", style: _headingStyle),
+                    style: bodyStyle),
+                TextSpan(text: "Also,\n", style: headingStyle),
                 TextSpan(
                     text:
                         "There might be options for donating to each recipe contributor at contribution section of each recipe.\n",
-                    style: _bodyStyle),
-                TextSpan(text: "Finally,\n", style: _headingStyle),
+                    style: bodyStyle),
+                TextSpan(text: "Finally,\n", style: headingStyle),
                 TextSpan(
-                    text: "Source code for this app is", style: _bodyStyle),
+                    text: "Source code for this app is", style: bodyStyle),
                 TextSpan(
                     text: " here. ",
-                    style: _bodyStyle.copyWith(color: Colors.blue),
+                    style: bodyStyle.copyWith(color: Colors.blue),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launch("https://github.com/Binabh/based-cooking-app");
+                        launchUrlString("https://github.com/Binabh/based-cooking-app");
                       }),
                 TextSpan(
                     text:
                         "Please feel free to discuss about bugs and features in issues of the repo. ",
-                    style: _bodyStyle),
+                    style: bodyStyle),
                 TextSpan(
                     text:
                         "You can also donate to me (the app developer). Details are",
-                    style: _bodyStyle),
+                    style: bodyStyle),
                 TextSpan(
                     text: " here.\n",
-                    style: _bodyStyle.copyWith(color: Colors.blue),
+                    style: bodyStyle.copyWith(color: Colors.blue),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launch("https://binabh.com.np/donate");
+                        launchUrlString("https://binabh.com.np/donate");
                       }),
               ]))
             ],
@@ -255,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               e,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .subtitle1,
+                                                  .titleMedium,
                                             ),
                                             backgroundColor: activeTag
                                                 ? BasedColors.tomato

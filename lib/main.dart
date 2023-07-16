@@ -1,5 +1,5 @@
-import 'package:based_cooking/constants/theme.dart';
-import 'package:based_cooking/screens/homepage.dart';
+import 'package:basedcooking/constants/theme.dart';
+import 'package:basedcooking/screens/homepage.dart';
 import 'package:flutter/material.dart';
 
 void main() async {

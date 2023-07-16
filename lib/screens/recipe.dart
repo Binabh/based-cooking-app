@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:based_cooking/constants/api_endpoints.dart';
-import 'package:based_cooking/constants/colors.dart';
-import 'package:based_cooking/constants/theme.dart';
+import 'package:basedcooking/constants/api_endpoints.dart';
+import 'package:basedcooking/constants/colors.dart';
+import 'package:basedcooking/constants/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:path_provider/path_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class RecipePage extends StatefulWidget {
   final String filepath;
@@ -16,10 +16,10 @@ class RecipePage extends StatefulWidget {
   const RecipePage({Key? key, required this.filepath}) : super(key: key);
 
   @override
-  _RecipePageState createState() => _RecipePageState();
+  RecipePageState createState() => RecipePageState();
 }
 
-class _RecipePageState extends State<RecipePage> {
+class RecipePageState extends State<RecipePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +49,15 @@ class _RecipePageState extends State<RecipePage> {
             },
             data: File(widget.filepath)
                 .readAsStringSync()
-                .replaceAll('(/pix/', '(${ApiEndpoint.rawPixUrl}'),
+                .replaceAll('(/pix/', '(${ApiEndpoint.rawPixUrl}')
+                .replaceFirst("---", "")
+                .replaceFirst("title:", "# ")
+                .replaceFirst('"', '')
+                .replaceFirst('"', '')
+                .replaceFirst("date:", "🗓")
+                .replaceFirst(RegExp(r'tags\s*:\s*\[([^\]]+)\]'), "")
+                .replaceFirst("author:", "🧑‍🍳")
+                .replaceFirst("---", ""),
             selectable: true,
             onTapLink: (text, link, title) async {
               Directory appDir = await getApplicationDocumentsDirectory();
@@ -58,15 +66,15 @@ class _RecipePageState extends State<RecipePage> {
               } else if (!link.contains("https://")) {
                 String filename = link.split(".").first;
                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                  return RecipePage(filepath: appDir.path + '/$filename.md');
+                  return RecipePage(filepath: '${appDir.path}/$filename.md');
                 }));
               } else if (link.contains("https://based.cooking/")) {
                 String filename = link.split('/').last;
                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                  return RecipePage(filepath: appDir.path + '/$filename.md');
+                  return RecipePage(filepath: '${appDir.path}/$filename.md');
                 }));
               } else {
-                launch(link);
+                launchUrlString(link);
               }
             },
           ),

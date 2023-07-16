@@ -1,14 +1,14 @@
-import 'package:based_cooking/constants/colors.dart';
+import 'package:basedcooking/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 ThemeData primaryTheme = ThemeData(
     primaryColor: BasedColors.tomato,
     textTheme: const TextTheme(
-      headline1:
+      displayLarge:
           TextStyle(color: BasedColors.tomato, fontWeight: FontWeight.bold, fontSize: 18),
-      bodyText1: TextStyle(color: BasedColors.white, fontSize: 16),
-      subtitle1: TextStyle(
+      bodyLarge: TextStyle(color: BasedColors.white, fontSize: 16),
+      titleMedium: TextStyle(
           fontSize: 12, color: BasedColors.black, fontWeight: FontWeight.bold),
     ));
 MarkdownStyleSheet markdownStyleSheet = MarkdownStyleSheet(

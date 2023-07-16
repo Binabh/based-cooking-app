@@ -1,4 +1,4 @@
-package mp.com.binabh.basedcooking.based_cooking
+package np.com.binabh.basedcooking
 
 import io.flutter.embedding.android.FlutterActivity
 
