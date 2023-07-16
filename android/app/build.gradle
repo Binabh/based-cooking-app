@@ -70,7 +70,6 @@ android {
     productFlavors {
         fdroid {
             dimension "deploy"
-            signingConfig null
         }
         playstore {
             dimension "deploy"
