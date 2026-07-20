@@ -42,6 +42,18 @@ class RecipeDao extends DatabaseAccessor<AppDatabase> with _$RecipeDaoMixin {
   Future insertRecipe(RecipesCompanion recipe) =>
       into(recipes).insert(recipe, mode: InsertMode.replace);
   Future deleteRecipe(Recipe recipe) => delete(recipes).delete(recipe);
+
+  Future toggleFavourite(String filename, bool currentValue) =>
+      (update(recipes)..where((tbl) => tbl.filename.equals(filename)))
+          .write(RecipesCompanion(isFavourite: Value(!currentValue)));
+
+  Stream<List<Recipe>> watchFavouriteRecipes() =>
+      (select(recipes)..where((tbl) => tbl.isFavourite.equals(true))).watch();
+
+  Stream<bool> watchIsFavourite(String filename) =>
+      (select(recipes)..where((tbl) => tbl.filename.equals(filename)))
+          .watchSingle()
+          .map((recipe) => recipe.isFavourite);
 }
 
 final AppDatabase db = AppDatabase();

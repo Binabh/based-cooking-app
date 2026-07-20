@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:basedcooking/base/database.dart';
 import 'package:basedcooking/constants/api_endpoints.dart';
 import 'package:basedcooking/constants/colors.dart';
 import 'package:basedcooking/constants/theme.dart';
@@ -24,13 +25,36 @@ class RecipePageState extends State<RecipePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: BasedColors.lightBlack,
+        appBar: AppBar(
+          backgroundColor: BasedColors.lightBlack,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: BasedColors.tomato),
+          actions: [
+            StreamBuilder<bool>(
+              stream: db.recipeDao.watchIsFavourite(widget.filepath),
+              builder: (context, snapshot) {
+                final isFav = snapshot.data ?? false;
+                return IconButton(
+                  onPressed: () {
+                    db.recipeDao.toggleFavourite(widget.filepath, isFav);
+                  },
+                  icon: Icon(
+                    isFav ? Icons.favorite : Icons.favorite_border,
+                    color: BasedColors.tomato,
+                  ),
+                  tooltip: isFav ? 'Remove from favourites' : 'Add to favourites',
+                );
+              },
+            ),
+          ],
+        ),
         body: SafeArea(
             child: Card(
           shape: const RoundedRectangleBorder(
               side: BorderSide(color: BasedColors.tomato, width: 1.5),
               borderRadius: BorderRadius.all(Radius.circular(10))),
           color: BasedColors.black,
-          margin: const EdgeInsets.only(left: 8, top: 16, bottom: 16, right: 8),
+          margin: const EdgeInsets.only(left: 8, top: 0, bottom: 16, right: 8),
           elevation: 1,
           child: Markdown(
             extensionSet: md.ExtensionSet(

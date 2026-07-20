@@ -2,6 +2,7 @@ import 'package:basedcooking/base/database.dart';
 import 'package:basedcooking/constants/colors.dart';
 import 'package:basedcooking/constants/theme.dart';
 import 'package:basedcooking/repositories/get_files.dart';
+import 'package:basedcooking/screens/favourites.dart';
 import 'package:basedcooking/screens/recipe.dart';
 import 'package:basedcooking/utils/debouncer.dart';
 import 'package:flutter/gestures.dart';
@@ -190,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         itemCount: recipePaths.length,
                         itemBuilder: (_, index) {
                           String filename = recipePaths[index].filename;
-                          String title = recipePaths[index].title;
+                          String recipeTitle = recipePaths[index].title;
                           List<String> tags = recipePaths[index].tags.split("|");
                           return GestureDetector(
                             onTap: () {
@@ -217,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     MarkdownBody(
-                                      data: title,
+                                      data: recipeTitle,
                                       styleSheet: MarkdownStyleSheet(
                                           h1: markdownStyleSheet.h1!
                                               .copyWith(fontSize: 18)),
@@ -282,6 +283,19 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: BasedColors.tomato,
           animatedIcon: AnimatedIcons.menu_close,
           children: [
+            SpeedDialChild(
+              label: "Favourites",
+              child: IconButton(
+                icon: const Icon(Icons.favorite),
+                onPressed: () {
+                  isDialOpen.value = false;
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (_) => const FavouritesPage()),
+                  );
+                },
+              ),
+            ),
             SpeedDialChild(
               label: searchMode ? "Close Search" : "Search",
               child: searchMode
